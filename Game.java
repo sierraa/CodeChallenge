@@ -38,6 +38,11 @@ public class Game {
         return computerScore;
     }
 
+    public void resetScore() {
+        myScore = 0;
+        computerScore = 0;
+    }
+
     private int randomChoice() {
         Random rand = new Random();
         int index = rand.nextInt(5);
