@@ -19,9 +19,6 @@ public class Game {
         int computerChoice = randomChoice();
         int difference = userChoice - computerChoice;
         int result = (difference < 0 ? 5 + difference : difference) % 5;
-        System.out.println("userChoice = " + userChoice);
-        System.out.println("computerChoice = " + computerChoice);
-        System.out.println(result);
         if (result == 1 | result == 3) { // user wins
             myScore++;
             return String.format("You win. %S beats %S!", choices[userChoice], choices[computerChoice]);
