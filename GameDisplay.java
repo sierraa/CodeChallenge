@@ -10,8 +10,12 @@ public class GameDisplay {
     Game game;
     int userChoice = -1;
     String displayMessage = "Choose your weapon and prepare for battle!";
-    String scoreMessage = "You: %d \nComputer: %d";
-    boolean pause = false;
+    String scoreMessage = "You: %d Computer: %d";
+    String helpMessage = "Scissors cuts paper and decapitates lizard.\n" +
+            "Paper covers rock and disproves Spock.\n" +
+            "Rock crushes scissors and lizard.\n" +
+            "Lizard eats paper and poisons Spock.\n" +
+            "Spock smashes scissors and vaporizes rock.\n";
 
     JTextArea textDisplay;
     JTextArea scoreDisplay;
@@ -25,8 +29,9 @@ public class GameDisplay {
         window = new JFrame("Rock-paper-scissors-lizard-Spock");
         window.setSize(500, 500);
 
-        JPanel mainPanel = new JPanel(new GridBagLayout());
+        JPanel mainPanel = new JPanel(new BorderLayout());
         JPanel playPanel = new JPanel();
+        JPanel topPanel = new JPanel();
 
         JButton rockButton = new JButton("Rock");
         rockButton.addActionListener(new ActionListener() {
@@ -88,20 +93,33 @@ public class GameDisplay {
             public void actionPerformed(ActionEvent e) {
                 game.resetScore();
                 updateScore();
+                textDisplay.setText(displayMessage);
             }
         });
 
-        mainPanel.add(resetButton);
-        mainPanel.add(textDisplay);
-        mainPanel.add(scoreDisplay);
-        mainPanel.add(playPanel);
+        JButton helpButton = new JButton("Help");
+        helpButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                textDisplay.setText(helpMessage + "\n\n" + displayMessage);
+            }
+        });
+
+        topPanel.add(helpButton);
+        topPanel.add(resetButton);
+        topPanel.add(scoreDisplay);
+
+        mainPanel.add(topPanel, BorderLayout.PAGE_START);
+        mainPanel.add(textDisplay, BorderLayout.CENTER);
+        mainPanel.add(playPanel, BorderLayout.PAGE_END);
 
         window.add(mainPanel);
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         window.setVisible(true);
     }
 
     private void play() {
+        // activated each time a button is pressed
         if (userChoice != -1) {
             String result = game.play(userChoice);
             textDisplay.setText(result);

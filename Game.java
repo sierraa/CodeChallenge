@@ -17,12 +17,15 @@ public class Game {
      */
     public String play(int userChoice) {
         int computerChoice = randomChoice();
-        int result = Math.abs(userChoice - computerChoice) % 5;
+        int difference = userChoice - computerChoice;
+        int result = (difference < 0 ? 5 + difference : difference) % 5;
+        System.out.println("userChoice = " + userChoice);
+        System.out.println("computerChoice = " + computerChoice);
         System.out.println(result);
-        if (result == 2 || result == 4) { // user wins
+        if (result == 1 | result == 3) { // user wins
             myScore++;
             return String.format("You win. %S beats %S!", choices[userChoice], choices[computerChoice]);
-        } else if (result == 1 || result == 3) {
+        } else if (result == 2 || result == 4) {
             computerScore++;
             return String.format("You lose. %S beats %S!", choices[computerChoice], choices[userChoice]);
         } else {
@@ -45,8 +48,7 @@ public class Game {
 
     private int randomChoice() {
         Random rand = new Random();
-        int index = rand.nextInt(5);
-        return index;
+        return rand.nextInt(5);
     }
 
 
